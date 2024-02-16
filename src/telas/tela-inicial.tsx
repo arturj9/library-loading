@@ -1,9 +1,13 @@
 import { Cabecalho } from "../components/cabecalho";
+import { Filtro } from "../components/filtro";
 
 
 export function TelaInicial() {
     return (
-        <Cabecalho/>
+        <div>
+            <Cabecalho />
+            <Filtro />
+        </div>
     )
 }
 

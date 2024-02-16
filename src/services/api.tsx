@@ -9,6 +9,11 @@ const conf = {
     }
 }
 
+const api = axios.create(conf)
+// api.interceptors.request.use(async (conf)=>{
+//     const token2 = token
+// })
+
 export async function requestAxios() {
     await axios.get('books/categories',conf).then((response)=>{
         console.log(response)
