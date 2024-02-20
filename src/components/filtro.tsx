@@ -1,21 +1,34 @@
+import { useEffect, useState } from "react"
+import { conf, getCategories } from "../services/api"
+import axios from "axios";
+
+interface Category {
+  id: string
+  name: string
+}
+
 export function Filtro() {
+  const [categories, setCategories] = useState<Category[]>([])
+  useEffect(() => {
+    axios.get('books/categories', conf).then((response) => {
+      setCategories(response.data['booksCategories']);
+    });
+  }, [])
   return (
     <div className=" m-4 h-39 p-3 bg-white rounded-md shadow-md">
       <p className="font-bold">Filtros</p>
       <div className="mt-2 grid-cols-2 flex">
         <div className="flex w-3/4 flex-col ">
-          <span className="text-slate-800">Pesquisa <span className="text-slate-400">(Titulo, Subtítulo, codigo, editora,Autor,Ano Edição)</span></span>
+          <span className="text-slate-800">Pesquisa <span className="text-slate-400">(titulo, código, editora, autor)</span></span>
           <input type="text" placeholder="Pesquisar..." className="text-slate-950 w-3/4 outline-none ring-1 ring-offset-1 ring-slate-800 rounded-sm p-1" />
         </div>
         <div className="flex flex-col w-1/4  ">
           <span className="text-slate-600">Livro Categoria</span>
           <select name="test" className="bg-white w-10/12 p-1  border-slate-500 outline-none ring-1 ring-offset-1 ring-slate-800 rounded-sm">
-            <option value="romance">Romance</option>
-            <option value="fantasia">Fantasia</option>
-            <option value="fantasia">Fantasia</option>
-            <option value="fantasia">Fantasia</option>
-            <option value="fantasia">Fantasia</option>
-            <option value="fantasia">Fantasia</option>
+            <option value="">Todos</option>
+            {categories.map(category => {
+              return <option key={category.id} value={category.id}>{category.name}</option>
+            })}
           </select>
         </div>
       </div>

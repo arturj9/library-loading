@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
-import { requestAxios } from '../services/api'
 
 
 export function Cabecalho() {
     async function handle() {
-        await requestAxios()
     }
     return (
         <div className="h-16 p-2 text-slate-600 bg-white flex justify-between shadow-md">
