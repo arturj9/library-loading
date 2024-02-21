@@ -1,11 +1,11 @@
 import { Cabecalho } from "../components/cabecalho";
-import {Tabela} from "../components/tabela"
+import {ListagemLivros} from "../components/listagem-livros"
 
 export function TelaInicial() {
     return (
         <div>
             <Cabecalho />
-            <Tabela />
+            <ListagemLivros />
         </div>
     )
 }

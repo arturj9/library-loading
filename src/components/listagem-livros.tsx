@@ -14,7 +14,7 @@ interface Book {
   bookCategoryId: string
 }
 
-export function Tabela() {
+export function ListagemLivros() {
   const [books, setBooks] = useState<Book[]>([])
   const [filterBooks, setFilterBooks] = useState<Book[]>([])
 
