@@ -1,4 +1,4 @@
-import { ChangeEvent, SelectHTMLAttributes, useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import { listagemCategorias } from "../services/chamadasAPI"
 
 interface Category {

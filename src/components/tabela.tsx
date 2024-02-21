@@ -16,30 +16,30 @@ interface Book {
 
 export function Tabela() {
   const [books, setBooks] = useState<Book[]>([])
+  const [filterBooks, setFilterBooks] = useState<Book[]>([])
 
   useEffect(() => {
     listagemLivros().then((response) => {
       setBooks(response['books']);
+      setFilterBooks(response['books']);
     }).catch((error) => {
       console.log(error)
     })
   }, [])
 
-  let filterBooks = books
-
   function onFilterByCategory(categoryId: string) {
-    const filterBooks = books.filter(book => {book.bookCategoryId == categoryId})
-    setBooks(filterBooks)
+    const filterBooks = books.filter(book => book.bookCategoryId == categoryId)
+    setFilterBooks(filterBooks)
   }
 
   function offFilterByCategory() {
-    listagemLivros().then((response) => {
-      setBooks(response['books']);
-    }).catch((error) => {
-      console.log(error)
-    })
+    setAllBooks()
   }
-  console.log(filterBooks)
+
+  function setAllBooks() {
+    setFilterBooks(books)
+  }
+
 
   return (
     <div>
@@ -71,7 +71,7 @@ export function Tabela() {
                   </tr>
                 </thead>
                 <tbody>
-                  {books.length > 0 ? books.map(book => {
+                  {filterBooks.length > 0 ? filterBooks.map(book => {
                     return (
                       <tr key={book.id}>
                         <td className="whitespace-nowrap px-6 py-4"><RowActions /></td>
