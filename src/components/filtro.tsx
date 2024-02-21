@@ -1,19 +1,34 @@
-import { useEffect, useState } from "react"
-import { conf, getCategories } from "../services/api"
-import axios from "axios";
+import { ChangeEvent, SelectHTMLAttributes, useEffect, useState } from "react"
+import { listagemCategorias } from "../services/chamadasAPI"
 
 interface Category {
   id: string
   name: string
 }
 
-export function Filtro() {
+interface FiltroProps {
+  onFilterByCategory: (categoryId: string) => void
+  offFilterByCategory: () => void
+}
+
+export function Filtro({ onFilterByCategory, offFilterByCategory }: FiltroProps) {
   const [categories, setCategories] = useState<Category[]>([])
+  const [selectedValue, setSelectedValue] = useState('');
+
   useEffect(() => {
-    axios.get('books/categories', conf).then((response) => {
-      setCategories(response.data['booksCategories']);
+    listagemCategorias().then((response) => {
+      setCategories(response['booksCategories']);
     });
   }, [])
+
+  function handleCategory(event: ChangeEvent<HTMLSelectElement>) {
+    setSelectedValue(event.target.value);
+    if (event.target.value != '') {
+      onFilterByCategory(event.target.value)
+    } else
+      offFilterByCategory()
+  };
+
   return (
     <div className=" m-4 h-39 p-3 bg-white rounded-md shadow-md">
       <p className="font-bold">Filtros</p>
@@ -24,7 +39,7 @@ export function Filtro() {
         </div>
         <div className="flex flex-col w-1/4  ">
           <span className="text-slate-600">Livro Categoria</span>
-          <select name="test" className="bg-white w-10/12 p-1  border-slate-500 outline-none ring-1 ring-offset-1 ring-slate-800 rounded-sm">
+          <select value={selectedValue} onChange={handleCategory} name="test" className="bg-white w-10/12 p-1  border-slate-500 outline-none ring-1 ring-offset-1 ring-slate-800 rounded-sm">
             <option value="">Todos</option>
             {categories.map(category => {
               return <option key={category.id} value={category.id}>{category.name}</option>
