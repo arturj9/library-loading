@@ -1,6 +1,6 @@
 import { Category } from "../types/types";
 
-export function Filtro({ categories, onFilterByCategory }: { categories: Category[], onFilterByCategory: (categoryId: string) => void }) {
+export function Filtro({ categories, onFilterByCategory }: { categories: Category[], onFilterByCategory: (categoryId: string|null) => void }) {
 
   return (
     <div className=" m-4 h-39 p-3 bg-white rounded-md shadow-md">
@@ -24,7 +24,12 @@ export function Filtro({ categories, onFilterByCategory }: { categories: Categor
         <div className="flex flex-col w-1/4  ">
           <span className="text-slate-600">Livro Categoria</span>
           <select
-            onChange={(e) => onFilterByCategory(e.target.value)}
+            onChange={(e) => {
+              if (e.target.value) { onFilterByCategory(e.target.value) }
+              else {
+                onFilterByCategory(null)
+              }
+            }}
             name="test"
             className="bg-white w-10/12 p-1  border-slate-500 outline-none ring-1 ring-offset-1 ring-slate-800 rounded-sm"
           >

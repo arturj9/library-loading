@@ -9,7 +9,7 @@ export function TelaInicial() {
     const [categories, setCategories] = useState<Category[]>([])
     const [books, setBooks] = useState<Book[]>([])
     const [pageInfo, setPageInfo] = useState<PageInfo>({ page: 0, pageSize: 0, totalPages: 0, totalItems: 0 })
-    const [currentCategoryId, setcurrentCategoryId] = useState<string>('')
+    const [currentCategoryId, setcurrentCategoryId] = useState<string | null>(null)
     const [search, setSearch] = useState<string>('');
 
     async function getCategories() {
@@ -35,7 +35,7 @@ export function TelaInicial() {
         }
     }
 
-    function onFilterByCategory(categoryId:string){
+    function onFilterByCategory(categoryId:string|null){
         setcurrentCategoryId(categoryId)
     }
 

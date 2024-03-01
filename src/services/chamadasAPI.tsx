@@ -10,7 +10,7 @@ export async function listagemCategorias() {
 }
 
 export async function listagemLivros(page: number = 1,
-    pageSize: number = 10, categoryId:string) {
+    pageSize: number = 10, categoryId:string|null) {
     try {
         const response = await api.get("books/list/", {
             params: {
