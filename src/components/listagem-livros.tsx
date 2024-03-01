@@ -1,82 +1,10 @@
-import { useEffect, useState } from "react";
-import { listagemLivros } from "../services/chamadasAPI";
-import { RowActions } from "./row-actions";
-import { Filtro } from "./filtro";
+import { Book, PageInfo } from "../types/types";
+import { Rows } from "./rows";
 
-interface Book {
-  id: string;
-  title: string;
-  cod: string;
-  editora: string;
-  autor: string;
-  sinopse: string;
-  qtd: number;
-  bookCategoryId: string;
-}
-
-export function ListagemLivros() {
-  const [books, setBooks] = useState<Book[]>([]);
-  const [filterBooks, setFilterBooks] = useState<Book[]>([]);
-  const [category, setCategory] = useState("");
-
-  useEffect(() => {
-    listagemLivros()
-      .then((response) => {
-        setBooks(response["books"]);
-        setFilterBooks(response["books"]);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  function onFilterByCategory(categoryId: string) {
-    if (categoryId != "") {
-      setCategory(categoryId);
-      const filterBooks = books.filter(
-        (book) => book.bookCategoryId == categoryId
-      );
-      setFilterBooks(filterBooks);
-    } else {
-      setAllBooks();
-    }
-  }
-
-  function onFilterBySearch(search: string) {
-    search != "" ? filterBySearch(search) : onFilterByCategory(category);
-  }
-
-  function offFilterByCategory() {
-    setAllBooks();
-    setCategory("");
-  }
-
-  function filterBySearch(search: string) {
-    let filterBooksBySearch: Book[] = [];
-    search = search.toLowerCase();
-    filterBooks.map((book) => {
-      if (
-        book.title.toLocaleLowerCase().includes(search) ||
-        book.autor.toLocaleLowerCase().includes(search) ||
-        book.cod.toLocaleLowerCase().includes(search)
-      ) {
-        filterBooksBySearch.push(book);
-      }
-    });
-    setFilterBooks(filterBooksBySearch);
-  }
-
-  function setAllBooks() {
-    setFilterBooks(books);
-  }
+export function ListagemLivros({books, pageInfo}:{books:Book[], pageInfo:PageInfo}) {
 
   return (
     <div>
-      <Filtro
-        onFilterByCategory={onFilterByCategory}
-        offFilterByCategory={offFilterByCategory}
-        onFilterBySearch={onFilterBySearch}
-      />
       <div className="flex flex-col m-3 bg-white rounded-md p-3">
         <div className="flex justify-between">
           <div className="flex flex-wrap text-[#23C55E] font-bold">
@@ -101,72 +29,8 @@ export function ListagemLivros() {
             adicionar
           </button>
         </div>
-        <div className="overflow-x-auto sm:-mx-6">
-          <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-            <div className="overflow-hidden">
-              <table className="min-w-full text-center text-sm font-light">
-                <thead className="font-medium">
-                  <tr key="1" className="bg-[#f5f5f5]">
-                    <th scope="col" className="px-6 py-4">
-                      Ações
-                    </th>
-                    <th scope="col" className="px-6 py-4">
-                      Título
-                    </th>
-                    <th scope="col" className="px-6 py-4">
-                      Codígo
-                    </th>
-                    <th scope="col" className="px-6 py-4">
-                      Editora
-                    </th>
-                    <th scope="col" className="px-6 py-4">
-                      Autor
-                    </th>
-                    <th scope="col" className="px-6 py-4">
-                      Sinopse
-                    </th>
-                    <th scope="col" className="px-6 py-4">
-                      Quantidade
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filterBooks.length > 0 ? (
-                    filterBooks.map((book) => {
-                      return (
-                        <tr key={book.id}>
-                          <td className="whitespace-nowrap px-6 py-4">
-                            <RowActions />
-                          </td>
-                          <td className="whitespace-nowrap px-6 py-4">
-                            {book.title}
-                          </td>
-                          <td className="whitespace-nowrap px-6 py-4">
-                            {book.cod}
-                          </td>
-                          <td className="whitespace-nowrap px-6 py-4">
-                            {book.editora}
-                          </td>
-                          <td className="whitespace-nowrap px-6 py-4">
-                            {book.autor}
-                          </td>
-                          <td className="whitespace-nowrap px-6 py-4">
-                            {book.sinopse}
-                          </td>
-                          <td className="whitespace-nowrap px-6 py-4">
-                            {book.qtd}
-                          </td>
-                        </tr>
-                      );
-                    })
-                  ) : (
-                    <tr></tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+        <Rows books={books}/>
+        <div>{(pageInfo.page-1)*pageInfo.pageSize+1} até {pageInfo.pageSize} itens de {pageInfo.totalItems}</div>
       </div>
     </div>
   );
