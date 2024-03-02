@@ -8,8 +8,9 @@ import { ListagemLivros } from "../components/listagem-livros";
 export function TelaInicial() {
     const [categories, setCategories] = useState<Category[]>([])
     const [books, setBooks] = useState<Book[]>([])
-    const [pageInfo, setPageInfo] = useState<PageInfo>({ page: 0, pageSize: 0, totalPages: 0, totalItems: 0 })
-    const [currentCategoryId, setcurrentCategoryId] = useState<string | null>(null)
+    const [page, setPage] = useState(1)
+    const [pageInfo, setPageInfo] = useState<PageInfo>({ page: 0, pageSize: 0, totalItems: 0, totalPages: 0 })
+    const [currentCategoryId, setcurrentCategoryId] = useState<string>('')
     const [search, setSearch] = useState<string>('');
 
     async function getCategories() {
@@ -23,7 +24,7 @@ export function TelaInicial() {
     }
 
     async function getBooks() {
-        const result = await listagemLivros(1,10,currentCategoryId)
+        const result = await listagemLivros(page, 10, currentCategoryId, search)
         if (result instanceof Error) {
             console.error(result)
         }
@@ -35,8 +36,26 @@ export function TelaInicial() {
         }
     }
 
-    function onFilterByCategory(categoryId:string|null){
+    function onFilterByCategory(categoryId: string) {
+        setPage(1)
         setcurrentCategoryId(categoryId)
+    }
+
+    function onFilterBySearch(search: string) {
+        setPage(1)
+        setSearch(search)
+    }
+
+    function nextPage() {
+        if (page + 1 <= pageInfo.totalPages) {
+            setPage(page + 1)
+        }
+    }
+
+    function prevPage() {
+        if (page - 1 > 0) {
+            setPage(page - 1)
+        }
     }
 
     useEffect(() => {
@@ -45,13 +64,13 @@ export function TelaInicial() {
 
     useEffect(() => {
         getBooks()
-    }, [currentCategoryId])
+    }, [currentCategoryId, search, page])
 
     return (
         <div>
             <Cabecalho />
-            <Filtro categories={categories} onFilterByCategory={onFilterByCategory} />
-            <ListagemLivros books={books} pageInfo={pageInfo} />
+            <Filtro categories={categories} onFilterByCategory={onFilterByCategory} onFilterBySearch={onFilterBySearch} />
+            <ListagemLivros books={books} pageInfo={pageInfo} nextPage={nextPage} prevPage={prevPage} />
         </div>
     )
 }

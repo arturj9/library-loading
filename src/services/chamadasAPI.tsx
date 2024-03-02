@@ -9,14 +9,15 @@ export async function listagemCategorias() {
     }
 }
 
-export async function listagemLivros(page: number = 1,
-    pageSize: number = 10, categoryId:string|null) {
+export async function listagemLivros(page: number,
+    pageSize: number, categoryId:string, search:string) {
     try {
         const response = await api.get("books/list/", {
             params: {
                 page,
                 pageSize,
-                search:categoryId
+                search,
+                categoryId
             }
         });
         return response.data;
