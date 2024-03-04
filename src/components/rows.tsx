@@ -6,7 +6,7 @@ export function Rows({ books }: { books: Book[] }) {
     <div className="overflow-x-auto overflow-scroll sm:-mx-6 ">
       <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
         <div className="overflow-hidden">
-          <table className="min-w-full text-center text-sm font-light">
+          <table className="min-w-full text-sm font-light">
             <thead className="font-medium">
               <tr key="1" className="bg-[#f5f5f5]">
                 <th scope="col" className="px-6 py-4 ">

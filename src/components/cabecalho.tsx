@@ -25,7 +25,7 @@ export function Cabecalho() {
           onClick={handle}
           className="p-1 text-slate-100 bg-[#23C55E] rounded-2xl"
         >
-          LOGIN
+          ADMIN
         </button>
         <Link className="text-blue-700" to="/login">
           Sair
