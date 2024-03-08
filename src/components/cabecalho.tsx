@@ -1,7 +1,17 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
 export function Cabecalho() {
-  async function handle() {}
+  const { logout } = useAuth()
+  const navigation = useNavigate();
+  function handleLogout() {
+    try {
+      logout()
+      navigation("/login");
+    } catch (error) {
+      console.error(error)
+    }
+  }
   return (
     <div className="h-16 p-2 text-slate-600 bg-white flex justify-between shadow-md">
       <button>
@@ -22,14 +32,11 @@ export function Cabecalho() {
       </button>
       <div className="text-base w-24 flex justify-between items-center">
         <button
-          onClick={handle}
           className="p-1 text-slate-100 bg-[#23C55E] rounded-2xl"
         >
           ADMIN
         </button>
-        <Link className="text-blue-700" to="/login">
-          Sair
-        </Link>
+        <button className="text-blue-500" onClick={handleLogout}>Sair</button>
       </div>
     </div>
   );

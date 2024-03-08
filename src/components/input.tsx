@@ -1,13 +1,19 @@
-import React from "react";
 
-export function Input({ placeHolder }: { placeHolder: string }) {
+export function Input({ placeHolder, type, autoComplete, value, setValue }: {
+  placeHolder: string,
+  type: string,
+  autoComplete: string,
+  value: string,
+  setValue: (newValue:string) => void
+}) {
   return (
-    <div className="p-1">
       <input
-        type="text"
+        type={type}
+        autoComplete={autoComplete}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        className="appearance-none rounded-md relative block w-full px-3 py-2 border border-slate-400 placeholder-slate-600 text-slate-900 focus:outline-none focus:ring-slate-500 focus:border-slate-500 focus:z-10 sm:text-sm"
         placeholder={placeHolder}
-        className="bg-slate-500 rounded-sm"
       />
-    </div>
   );
 }
