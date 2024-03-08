@@ -1,15 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/authContext";
 
 export function Cabecalho() {
-  const { logout } = useAuth()
   const navigation = useNavigate();
   function handleLogout() {
     try {
-      logout()
       navigation("/login");
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
   return (
@@ -31,12 +28,12 @@ export function Cabecalho() {
         </svg>
       </button>
       <div className="text-base w-24 flex justify-between items-center">
-        <button
-          className="p-1 text-slate-100 bg-[#23C55E] rounded-2xl"
-        >
+        <button className="p-1 text-slate-100 bg-[#23C55E] rounded-2xl">
           ADMIN
         </button>
-        <button className="text-blue-500" onClick={handleLogout}>Sair</button>
+        <button className="text-blue-500" onClick={handleLogout}>
+          Sair
+        </button>
       </div>
     </div>
   );

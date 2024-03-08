@@ -1,13 +1,14 @@
 import { Category } from "../types/types";
 
-export function Filtro({ categories,
+export function Filtro({
+  categories,
   onFilterByCategory,
-  onFilterBySearch }: {
-    categories: Category[],
-    onFilterByCategory: (categoryId: string) => void,
-    onFilterBySearch: (search: string) => void
-  }) {
-
+  onFilterBySearch,
+}: {
+  categories: Category[];
+  onFilterByCategory: (categoryId: string) => void;
+  onFilterBySearch: (search: string) => void;
+}) {
   return (
     <div className=" m-4 h-39 p-3 bg-white rounded-md shadow-md">
       <p className="font-bold">Filtros</p>
@@ -34,15 +35,14 @@ export function Filtro({ categories,
             className="bg-white w-10/12 p-1  border-slate-500 outline-none ring-1 ring-offset-1 ring-slate-800 rounded-sm"
           >
             <option value="">Todos</option>
-            {categories && (
+            {categories &&
               categories.map((category) => {
                 return (
                   <option key={category.id} value={category.id}>
                     {category.name}
                   </option>
                 );
-              })
-            )}
+              })}
           </select>
         </div>
       </div>
