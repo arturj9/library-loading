@@ -1,16 +1,20 @@
-import { Book, PageInfo } from "../types/types";
+import { Book, Category, PageInfo } from "../types/types";
 import { Rows } from "./rows";
+import "@radix-ui/themes/styles.css";
+import { ModalBook } from "./modal-book";
 
 export function ListagemLivros({
   books,
   pageInfo,
   nextPage,
   prevPage,
+  categories,
 }: {
   books: Book[];
   pageInfo: PageInfo;
   nextPage: () => void;
   prevPage: () => void;
+  categories: Category[];
 }) {
   return (
     <div>
@@ -34,9 +38,7 @@ export function ListagemLivros({
             <span>Livros</span>
           </div>
 
-          <button className="p-1 h-auto text-slate-100 bg-[#23C55E] rounded-md">
-            adicionar
-          </button>
+          <ModalBook categories={categories}></ModalBook>
         </div>
         <div className="overflow-hidden">
           <Rows books={books} />

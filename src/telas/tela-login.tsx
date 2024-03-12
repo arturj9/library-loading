@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
-import { Input } from "../components/input";
 import { Botao } from "../components/botao";
+import { LabelInput } from "../components/label-input";
 import { login } from "../services/chamadasAPI";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
@@ -50,30 +50,22 @@ export function TelaLogin() {
           className="mt-8 space-y-6 flex items-center justify-center flex-col"
           onSubmit={handleLogin}
         >
-          <div className="w-11/12 rounded-md shadow-sm -space-y-px">
-            <span className="text-slate-700">E-mail</span>
-            <div>
-              <Input
-                placeHolder="example@email.com"
-                type="email"
-                autoComplete="email"
-                value={email}
-                setValue={setEmail}
-              />
-            </div>
-          </div>
-          <div className="w-11/12 rounded-md shadow-sm -space-y-px">
-            <span className="text-slate-700">Senha</span>
-            <div>
-              <Input
-                placeHolder="senha"
-                type="password"
-                autoComplete="current-password"
-                value={password}
-                setValue={setPassword}
-              />
-            </div>
-          </div>
+          <LabelInput
+            name="E-mail"
+            placeHolder="example@email.com"
+            type="email"
+            autoComplete="email"
+            value={email}
+            setValue={setEmail}
+          />
+          <LabelInput
+            name="Senha"
+            placeHolder="senha"
+            type="password"
+            autoComplete="current-password"
+            value={password}
+            setValue={setPassword}
+          />
           <div className="w-11/12">
             <Botao
               name="Entrar"
