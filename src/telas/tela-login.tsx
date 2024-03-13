@@ -1,13 +1,13 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { Botao } from "../components/botao";
 import { LabelInput } from "../components/label-input";
-import { login } from "../services/chamadasAPI";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../contexts/auth";
 
 export function TelaLogin() {
-  const navigation = useNavigate();
+  const { login } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setIsLoading] = useState(false);
@@ -24,14 +24,11 @@ export function TelaLogin() {
       try {
         setIsLoading(true);
         const result = await login(email, password);
-        console.log(result);
         if (result instanceof AxiosError && result.response) {
           toast.error(result.response.data.message);
         } else {
-          localStorage.setItem("token", result.token);
-          if (localStorage.getItem("token")) {
-            navigation("/");
-          }
+          localStorage.setItem("token", result.toString());
+          window.location.reload()
         }
       } finally {
         setIsLoading(false);

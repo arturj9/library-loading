@@ -1,10 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/auth";
 
 export function Cabecalho() {
-  const navigation = useNavigate();
+  const { logout } = useContext(AuthContext)
   function handleLogout() {
     try {
-      navigation("/login");
+      logout();
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }

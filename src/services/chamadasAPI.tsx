@@ -33,7 +33,7 @@ export async function login(email: string, password: string) {
             email,
             password
         });
-        return response.data;
+        return response.data['token'];
     } catch (error: AxiosError | any) {
         return error
     }

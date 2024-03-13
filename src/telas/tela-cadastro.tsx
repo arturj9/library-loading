@@ -58,86 +58,86 @@ export function TelaCadastro() {
         setIsLoading(false);
       }
     }
-    return (
-      <div>
-        <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-          <div className="p-4 bg-white border-t-[#23C55E] border-t-2 rounded-md max-w-3xl w-full space-y-9">
-            <div className="flex items-center justify-center flex-col">
-              <h2 className="text-center text-3xl font-extrabold text-slate-700">
-                Cadastro
-              </h2>
+  }
+  return (
+    <div>
+      <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="p-4 bg-white border-t-[#23C55E] border-t-2 rounded-md max-w-3xl w-full space-y-9">
+          <div className="flex items-center justify-center flex-col">
+            <h2 className="text-center text-3xl font-extrabold text-slate-700">
+              Cadastro
+            </h2>
+          </div>
+          <form
+            className="space-y-6 flex items-center justify-center flex-col"
+            onSubmit={handleCadastro}
+          >
+            <div className="grid space-y-6 grid-cols-2 w-full">
+              <LabelInput
+                name="Nome"
+                placeHolder="Nome Completo"
+                type="text"
+                autoComplete="name"
+                value={name}
+                setValue={setName}
+              ></LabelInput>
+              <LabelInput
+                name="Nome de usuario"
+                placeHolder="nome de usuario"
+                type="text"
+                autoComplete="name"
+                value={username}
+                setValue={setUsername}
+              ></LabelInput>
+              <LabelInput
+                name="E-mail"
+                placeHolder="Digite seu Email"
+                type="text"
+                autoComplete="email"
+                value={email}
+                setValue={setEmail}
+              ></LabelInput>
+              <LabelInput
+                name="Confirmação do E-mail"
+                placeHolder="Confirme seu Email"
+                type="text"
+                autoComplete="email"
+                value={emailRepeat}
+                setValue={setEmailRepeat}
+              ></LabelInput>
+              <LabelInput
+                name="senha"
+                placeHolder="senha"
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                setValue={setPassword}
+              ></LabelInput>
+              <LabelInput
+                name="senha"
+                placeHolder="confirme sua senha"
+                type="password"
+                autoComplete="current-password"
+                value={passwordRepeat}
+                setValue={setpasswordRepeat}
+              ></LabelInput>
             </div>
-            <form
-              className="space-y-6 flex items-center justify-center flex-col"
-              onSubmit={handleCadastro}
-            >
-              <div className="grid space-y-6 grid-cols-2 w-full">
-                <LabelInput
-                  name="Nome"
-                  placeHolder="Nome Completo"
-                  type="text"
-                  autoComplete="name"
-                  value={name}
-                  setValue={setName}
-                ></LabelInput>
-                <LabelInput
-                  name="Nome de usuario"
-                  placeHolder="nome de usuario"
-                  type="text"
-                  autoComplete="name"
-                  value={username}
-                  setValue={setUsername}
-                ></LabelInput>
-                <LabelInput
-                  name="E-mail"
-                  placeHolder="Digite seu Email"
-                  type="text"
-                  autoComplete="email"
-                  value={email}
-                  setValue={setEmail}
-                ></LabelInput>
-                <LabelInput
-                  name="Confirmação do E-mail"
-                  placeHolder="Confirme seu Email"
-                  type="text"
-                  autoComplete="email"
-                  value={emailRepeat}
-                  setValue={setEmailRepeat}
-                ></LabelInput>
-                <LabelInput
-                  name="senha"
-                  placeHolder="senha"
-                  type="password"
-                  autoComplete="current-password"
-                  value={password}
-                  setValue={setPassword}
-                ></LabelInput>
-                <LabelInput
-                  name="senha"
-                  placeHolder="confirme sua senha"
-                  type="password"
-                  autoComplete="current-password"
-                  value={passwordRepeat}
-                  setValue={setpasswordRepeat}
-                ></LabelInput>
-              </div>
-              <div className="w-1/3">
-                <Botao
-                  name="Cadastrar"
-                  nameIsLoading="Cadastrar"
-                  isLoading={loading}
-                  type="submit"
-                />
-              </div>
-            </form>
-            <div className="text-right">
-              <Link className="text-blue-700 underline" to="/login">
-                Login
-              </Link>
+            <div className="w-1/3">
+              <Botao
+                name="Cadastrar"
+                nameIsLoading="Cadastrar"
+                isLoading={loading}
+                type="submit"
+              />
             </div>
+          </form>
+          <div className="text-right">
+            <Link className="text-blue-700 underline" to="/login">
+              Login
+            </Link>
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
