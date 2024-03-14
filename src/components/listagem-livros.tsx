@@ -2,6 +2,7 @@ import { Book, Category, PageInfo } from "../types/types";
 import { Rows } from "./rows";
 import "@radix-ui/themes/styles.css";
 import { ModalBook } from "./modal-book";
+import { FormEvent } from "react";
 
 export function ListagemLivros({
   books,
@@ -9,12 +10,46 @@ export function ListagemLivros({
   nextPage,
   prevPage,
   categories,
+  name,
+  setName,
+  code,
+  setCode,
+  author,
+  setAuthor,
+  editor,
+  setEditor,
+  quant,
+  setQuant,
+  category,
+  setCategory,
+  loading,
+  setIsLoading,
+  sinopse,
+  setSinopse,
+  handleSubmit,
 }: {
+  name: string;
+  setName: (name: string) => void;
+  code: string;
+  setCode: (code: string) => void;
+  author: string;
+  setAuthor: (author: string) => void;
+  editor: string;
+  setEditor: (editor: string) => void;
+  quant: number;
+  setQuant: (quant: number) => void;
+  category: string;
+  setCategory: (category: string) => void;
+  loading: boolean;
+  setIsLoading: (loading: boolean) => void;
+  sinopse: string;
+  setSinopse: (sinopse: string) => void;
   books: Book[];
   pageInfo: PageInfo;
   nextPage: () => void;
   prevPage: () => void;
   categories: Category[];
+  handleSubmit: (e: FormEvent) => Promise<void>;
 }) {
   return (
     <div>
@@ -38,7 +73,29 @@ export function ListagemLivros({
             <span>Livros</span>
           </div>
 
-          <ModalBook categories={categories}></ModalBook>
+          <ModalBook
+            name={name}
+            setName={setName}
+            code={code}
+            setCode={setCode}
+            author={author}
+            setAuthor={setAuthor}
+            editor={editor}
+            setEditor={setEditor}
+            quant={quant}
+            setQuant={setQuant}
+            category={category}
+            setCategory={setCategory}
+            loading={loading}
+            setIsLoading={setIsLoading}
+            sinopse={sinopse}
+            setSinopse={setSinopse}
+            categories={categories}
+            nameModal="Cadastro de livro"
+            nameButton="Cadastrar"
+            nameButtonIsLoading="Cadastrando"
+            handleSubmit={handleSubmit}
+          />
         </div>
         <div className="overflow-hidden">
           <Rows books={books} />
