@@ -1,5 +1,6 @@
 import { AxiosError } from "axios";
 import { api } from "./api";
+import { useParams } from "react-router-dom";
 
 export async function listagemCategorias() {
   try {
@@ -101,6 +102,16 @@ export async function registerBook(
     return response.data;
   } catch (error: AxiosError | any) {
     console.error(error);
+    return error;
+  }
+}
+export async function deleteBook(id: string): Promise<object | string> {
+  try {
+    const response = await api.delete("books/delete/", {
+      params: { id },
+    });
+    return response;
+  } catch (error: AxiosError | any) {
     return error;
   }
 }

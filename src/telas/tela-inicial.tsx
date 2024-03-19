@@ -111,7 +111,7 @@ export function TelaInicial() {
 
   useEffect(() => {
     getBooks();
-  }, [currentCategoryId, search, page]);
+  }, [currentCategoryId, search, page, books]);
 
   return (
     <div>

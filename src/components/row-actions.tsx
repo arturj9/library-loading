@@ -5,8 +5,26 @@ import {
   TEDropdownItem,
   TERipple,
 } from "tw-elements-react";
+import { BookContext } from "../contexts/book";
+import { useContext } from "react";
+import { toast } from "sonner";
+import { AxiosError } from "axios";
 
-export function RowActions(): JSX.Element {
+export function RowActions({ id }: { id: string }): JSX.Element {
+  const { deleteBook } = useContext(BookContext);
+  async function onDeleteBook() {
+    try {
+      const result = await deleteBook(id);
+      if (result instanceof AxiosError && result.response) {
+        console.error(result.response);
+        toast.error(result.response.data.message);
+      } else {
+        toast.success("Livro deletado com sucesso!");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <TEDropdown>
       <TERipple rippleColor="light">
@@ -30,20 +48,17 @@ export function RowActions(): JSX.Element {
 
       <TEDropdownMenu position="dropup">
         <TEDropdownItem>
-          <a
-            href="#"
+          <button
+            onClick={onDeleteBook}
             className="block w-full min-w-[160px] cursor-pointer whitespace-nowrap bg-transparent px-4 py-2 text-sm text-left font-normal pointer-events-auto text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:bg-neutral-100 focus:bg-neutral-100 focus:text-neutral-800 focus:outline-none active:no-underline dark:text-neutral-200 dark:hover:bg-neutral-600 dark:focus:bg-neutral-600 dark:active:bg-neutral-600"
           >
             Excluir
-          </a>
+          </button>
         </TEDropdownItem>
         <TEDropdownItem>
-          <a
-            href="#"
-            className="block w-full min-w-[160px] cursor-pointer whitespace-nowrap bg-transparent px-4 py-2 text-sm text-left font-normal pointer-events-auto text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:bg-neutral-100 focus:bg-neutral-100 focus:text-neutral-800 focus:outline-none active:no-underline dark:text-neutral-200 dark:hover:bg-neutral-600 dark:focus:bg-neutral-600 dark:active:bg-neutral-600"
-          >
+          <button className="block w-full min-w-[160px] cursor-pointer whitespace-nowrap bg-transparent px-4 py-2 text-sm text-left font-normal pointer-events-auto text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:bg-neutral-100 focus:bg-neutral-100 focus:text-neutral-800 focus:outline-none active:no-underline dark:text-neutral-200 dark:hover:bg-neutral-600 dark:focus:bg-neutral-600 dark:active:bg-neutral-600">
             Editar
-          </a>
+          </button>
         </TEDropdownItem>
       </TEDropdownMenu>
     </TEDropdown>

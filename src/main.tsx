@@ -4,11 +4,14 @@ import { App } from "./App";
 import "./tailwind.css";
 import { Toaster } from "sonner";
 import { AuthProvider } from "./contexts/auth";
+import { BookProvider } from "./contexts/book";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <AuthProvider>
-      <App />
+      <BookProvider>
+        <App />
+      </BookProvider>
     </AuthProvider>
     <Toaster richColors />
   </React.StrictMode>

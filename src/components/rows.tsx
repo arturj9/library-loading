@@ -38,7 +38,7 @@ export function Rows({ books }: { books: Book[] }) {
                   return (
                     <tr key={book.id}>
                       <td className="whitespace-nowrap px-6 py-4">
-                        <RowActions />
+                        <RowActions id={book.id} />
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
                         {book.title}
