@@ -1,6 +1,5 @@
 import { AxiosError } from "axios";
 import { api } from "./api";
-import { useParams } from "react-router-dom";
 
 export async function listagemCategorias() {
   try {
@@ -118,26 +117,24 @@ export async function deleteBook(id: string): Promise<object | string> {
 
 export async function editBook(
   id: string,
-  nameBook: string,
-  codeBook: string,
-  authorBook: string,
-  editorBook: string,
-  quantBook: string,
-  categoryBook: string,
-  sinopseBook: string
+  nameBook: string | null,
+  codeBook: string | null,
+  authorBook: string | null,
+  editorBook: string | null,
+  quantBook: string | null,
+  categoryBook: string | null,
+  sinopseBook: string | null
 ): Promise<object | string> {
+  quantBook ? parseInt(quantBook) : null;
   try {
-    const response = await api.patch("books/patch/", {
-      params: {
-        id,
-      },
+    const response = await api.patch(`books/patch/?id=${id}`, {
       title: nameBook,
       cod: codeBook,
       editora: editorBook,
       autor: authorBook,
       sinopse: sinopseBook,
       bookCategoryId: categoryBook,
-      qtd: parseInt(quantBook),
+      qtd: quantBook,
     });
     return response;
   } catch (error: AxiosError | any) {

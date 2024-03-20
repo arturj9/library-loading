@@ -25,7 +25,10 @@ interface BookContextData {
   isLoadingModalBook: boolean;
   setIsLoadingModalBook(value: boolean): void;
   handleRegisterBook(e: FormEvent): Promise<void>;
-  handleEditBook(id: string, e: FormEvent): Promise<void>;
+  handleEditBook(e: FormEvent, book: Book): Promise<void>;
+  defaultValues(): void;
+  setValues(nameBook: string, codeBook: string, authorBook: string, editorBook: string,
+    quantBook: number, categoryBook: string, sinopseBook: string): void;
 }
 
 interface BookProviderProps {
@@ -47,26 +50,61 @@ export const BookProvider = ({ children }: BookProviderProps) => {
   const [sinopseBook, setSinopseBook] = useState("");
   const [isLoadingModalBook, setIsLoadingModalBook] = useState(false);
 
-  async function handleEditBook(id: string, e: FormEvent) {
+  function defaultValues() {
+    setNameBook("");
+    setCodeBook("");
+    setAuthorBook("");
+    setEditorBook("");
+    setQuantBook(1);
+    setCategoryBook("");
+    setSinopseBook("");
+  }
+
+  function setValues(nameBook: string, codeBook: string, authorBook: string, editorBook: string,
+    quantBook: number, categoryBook: string, sinopseBook: string) {
+    setNameBook(nameBook);
+    setCodeBook(codeBook);
+    setAuthorBook(authorBook);
+    setEditorBook(editorBook);
+    setQuantBook(quantBook);
+    setCategoryBook(categoryBook);
+    setSinopseBook(sinopseBook);
+
+  }
+
+  async function handleEditBook(e: FormEvent, book: Book) {
     e.preventDefault();
-    try {
-      const result = await editBook(
-        id,
-        nameBook,
-        codeBook,
-        authorBook,
-        editorBook,
-        quantBook.toString(),
-        categoryBook,
-        sinopseBook
-      );
-      if (result instanceof AxiosError && result.response) {
-        toast.error(result.response.data.message);
-      } else {
-        toast.success("Livro atualizado com sucesso!");
+    if (book.title == nameBook && book.cod == codeBook && book.autor == authorBook &&
+      book.editora == editorBook && book.qtd == quantBook && book.bookCategoryId == categoryBook &&
+      book.sinopse == sinopseBook) {
+      toast.error("Altere pelo menos um campo!");
+    } else {
+      const newNameBook = book.title == nameBook ? null : nameBook;
+      const newCodeBook = book.cod == codeBook ? null : codeBook;
+      const newAuthorBook = book.autor == authorBook ? null : authorBook;
+      const newEditorBook = book.editora == editorBook ? null : editorBook;
+      const newQuant = book.qtd == quantBook ? null : quantBook.toString();
+      const newCategoryBook = book.bookCategoryId == categoryBook ? null : categoryBook;
+      const newSinopseBook = book.sinopse == sinopseBook ? null : sinopseBook;
+      try {
+        const result = await editBook(
+          book.id,
+          newNameBook,
+          newCodeBook,
+          newAuthorBook,
+          newEditorBook,
+          newQuant,
+          newCategoryBook,
+          newSinopseBook
+        );
+        if (result instanceof AxiosError && result.response) {
+          toast.error(result.response.data.message);
+        } else {
+          toast.success("Livro atualizado com sucesso!");
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
     }
   }
 
@@ -87,12 +125,7 @@ export const BookProvider = ({ children }: BookProviderProps) => {
         toast.error(result.response.data.message);
       } else {
         toast.success("Livro cadastrado com sucesso!");
-        setNameBook("");
-        setCodeBook("");
-        setAuthorBook("");
-        setEditorBook("");
-        setQuantBook(1);
-        setSinopseBook("");
+        defaultValues()
       }
     } finally {
       setIsLoadingModalBook(false);
@@ -123,6 +156,8 @@ export const BookProvider = ({ children }: BookProviderProps) => {
         isLoadingModalBook,
         setIsLoadingModalBook,
         handleEditBook,
+        defaultValues,
+        setValues
       }}
     >
       {children}

@@ -18,7 +18,7 @@ export function ListagemLivros({
   prevPage: () => void;
   categories: Category[];
 }) {
-  const { handleRegisterBook } = useContext(BookContext);
+  const { handleRegisterBook, defaultValues } = useContext(BookContext);
   async function onRegisterBook(e: FormEvent) {
     await handleRegisterBook(e);
   }
@@ -51,7 +51,7 @@ export function ListagemLivros({
             nameButton="Cadastrar"
             nameButtonIsLoading="Cadastrando"
             handleSubmit={onRegisterBook}
-            buttonStyle=""
+            handleOpen={defaultValues}
           />
         </div>
         <div className="overflow-hidden">

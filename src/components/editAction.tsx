@@ -1,37 +1,31 @@
-import {
-  TEDropdown,
-  TEDropdownToggle,
-  TEDropdownMenu,
-  TEDropdownItem,
-  TERipple,
-} from "tw-elements-react";
 import { BookContext } from "../contexts/book";
 import { FormEvent, useContext } from "react";
-import { toast } from "sonner";
-import { AxiosError } from "axios";
 import { ModalBook } from "./modal-book";
-import { CategoryBookContext } from "../contexts/categories";
-import { Category } from "../types/types";
+import { Book, Category } from "../types/types";
 
 export function EditAction({
-  id,
-  buttonStyle,
+  book,
   categories,
 }: {
-  id: string;
+  book: Book;
   buttonStyle: string;
   categories: Category[];
 }): JSX.Element {
-  const { handleEditBook } = useContext(BookContext);
+
+  const { handleEditBook, setValues } = useContext(BookContext);
 
   async function onEditBook(e: FormEvent) {
-    await handleEditBook(id, e);
+    await handleEditBook(e, book);
+  }
+
+  function handleSetValues() {
+    setValues(book.title, book.cod, book.autor, book.editora, book.qtd, book.bookCategoryId, book.sinopse)
   }
 
   return (
     <ModalBook
+      handleOpen={() => handleSetValues()}
       nameButtonVisible="Editar"
-      buttonStyle={buttonStyle}
       nameModal="Atualizar Livro"
       nameButton="Atualizar"
       categories={categories}

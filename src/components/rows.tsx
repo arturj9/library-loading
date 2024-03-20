@@ -1,11 +1,6 @@
-import { toast } from "sonner";
 import { Book } from "../types/types";
-import { ModalBook } from "./modal-book";
-// import { RowActions } from "./row-actions";
-import { FormEvent, useContext } from "react";
-import { BookContext } from "../contexts/book";
+import { useContext } from "react";
 import { CategoryBookContext } from "../contexts/categories";
-import { AxiosError } from "axios";
 import { DeleteAction } from "./deleteAction";
 import { EditAction } from "./editAction";
 
@@ -57,7 +52,7 @@ export function Rows({ books }: { books: Book[] }) {
                       <td className="whitespace-nowrap px-6 py-4">
                         <EditAction
                           categories={categories}
-                          id={book.id}
+                          book={book}
                           buttonStyle={buttonStyle}
                         />
                       </td>
