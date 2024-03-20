@@ -2,7 +2,8 @@ import { Book, Category, PageInfo } from "../types/types";
 import { Rows } from "./rows";
 import "@radix-ui/themes/styles.css";
 import { ModalBook } from "./modal-book";
-import { FormEvent } from "react";
+import { FormEvent, useContext } from "react";
+import { BookContext } from "../contexts/book";
 
 export function ListagemLivros({
   books,
@@ -10,47 +11,17 @@ export function ListagemLivros({
   nextPage,
   prevPage,
   categories,
-  name,
-  setName,
-  code,
-  setCode,
-  author,
-  setAuthor,
-  editor,
-  setEditor,
-  quant,
-  setQuant,
-  category,
-  setCategory,
-  loading,
-  setIsLoading,
-  sinopse,
-  setSinopse,
-  handleSubmit,
 }: {
-  name: string;
-  setName: (name: string) => void;
-  code: string;
-  setCode: (code: string) => void;
-  author: string;
-  setAuthor: (author: string) => void;
-  editor: string;
-  setEditor: (editor: string) => void;
-  quant: number;
-  setQuant: (quant: number) => void;
-  category: string;
-  setCategory: (category: string) => void;
-  loading: boolean;
-  setIsLoading: (loading: boolean) => void;
-  sinopse: string;
-  setSinopse: (sinopse: string) => void;
   books: Book[];
   pageInfo: PageInfo;
   nextPage: () => void;
   prevPage: () => void;
   categories: Category[];
-  handleSubmit: (e: FormEvent) => Promise<void>;
 }) {
+  const { handleRegisterBook } = useContext(BookContext);
+  async function onRegisterBook(e: FormEvent) {
+    await handleRegisterBook(e);
+  }
   return (
     <div>
       <div className="flex flex-col m-3 bg-white rounded-md p-3">
@@ -74,27 +45,13 @@ export function ListagemLivros({
           </div>
 
           <ModalBook
-            name={name}
-            setName={setName}
-            code={code}
-            setCode={setCode}
-            author={author}
-            setAuthor={setAuthor}
-            editor={editor}
-            setEditor={setEditor}
-            quant={quant}
-            setQuant={setQuant}
-            category={category}
-            setCategory={setCategory}
-            loading={loading}
-            setIsLoading={setIsLoading}
-            sinopse={sinopse}
-            setSinopse={setSinopse}
+            nameButtonVisible="Adicionar"
             categories={categories}
             nameModal="Cadastro de livro"
             nameButton="Cadastrar"
             nameButtonIsLoading="Cadastrando"
-            handleSubmit={handleSubmit}
+            handleSubmit={onRegisterBook}
+            buttonStyle=""
           />
         </div>
         <div className="overflow-hidden">

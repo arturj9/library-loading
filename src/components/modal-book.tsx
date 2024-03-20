@@ -2,58 +2,48 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { LabelInput } from "./label-input";
 import { Category } from "../types/types";
 import { Botao } from "./botao";
-import { FormEvent } from "react";
+import { FormEvent, useContext } from "react";
+import { BookContext } from "../contexts/book";
 
 export function ModalBook({
-  name,
-  setName,
-  code,
-  setCode,
-  author,
-  setAuthor,
-  editor,
-  setEditor,
-  quant,
-  setQuant,
-  category,
-  setCategory,
-  loading,
-  setIsLoading,
-  sinopse,
-  setSinopse,
   nameButton,
+  nameButtonVisible,
   nameButtonIsLoading,
   categories,
   nameModal,
   handleSubmit,
+  buttonStyle,
 }: {
-  name: string;
-  setName: (name: string) => void;
-  code: string;
-  setCode: (code: string) => void;
-  author: string;
-  setAuthor: (author: string) => void;
-  editor: string;
-  setEditor: (editor: string) => void;
-  quant: number;
-  setQuant: (quant: number) => void;
-  category: string;
-  setCategory: (category: string) => void;
-  loading: boolean;
-  setIsLoading: (loading: boolean) => void;
-  sinopse: string;
-  setSinopse: (sinopse: string) => void;
   nameButton: string;
+  nameButtonVisible: string;
   nameButtonIsLoading: string;
   categories: Category[];
   nameModal: string;
-  handleSubmit: (event: FormEvent) => Promise<void>;
+  handleSubmit(event: FormEvent): Promise<void>;
+  buttonStyle: string;
 }) {
+  const {
+    nameBook,
+    setNameBook,
+    codeBook,
+    setCodeBook,
+    authorBook,
+    setAuthorBook,
+    editorBook,
+    setEditorBook,
+    quantBook,
+    setQuantBook,
+    categoryBook,
+    setCategoryBook,
+    sinopseBook,
+    setSinopseBook,
+    isLoadingModalBook,
+  } = useContext(BookContext);
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
         <button className="p-1 h-auto text-slate-100 bg-[#23C55E] rounded-md">
-          adicionar
+          {nameButtonVisible}
         </button>
       </Dialog.Trigger>
       <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
@@ -84,48 +74,48 @@ export function ModalBook({
                 name="Nome do livro"
                 placeHolder="Digite o nome do livro"
                 type="text"
-                value={name}
+                value={nameBook}
                 autoComplete="name"
-                setValue={setName}
+                setValue={setNameBook}
               ></LabelInput>
               <LabelInput
                 name="codigo"
                 placeHolder="Digite o codigo"
                 type="text"
-                value={code}
+                value={codeBook}
                 autoComplete="name"
-                setValue={setCode}
+                setValue={setCodeBook}
               ></LabelInput>
               <LabelInput
                 name="autor"
                 placeHolder="Digite o nome do autor"
                 type="text"
-                value={author}
+                value={authorBook}
                 autoComplete="name"
-                setValue={setAuthor}
+                setValue={setAuthorBook}
               ></LabelInput>
               <LabelInput
                 name="Editora"
                 placeHolder="Digite o nome da editora"
                 type="text"
-                value={editor}
+                value={editorBook}
                 autoComplete="name"
-                setValue={setEditor}
+                setValue={setEditorBook}
               ></LabelInput>
               <LabelInput
                 name="Quantidade"
                 placeHolder="Digite a quantidade de livros"
                 type="number"
-                value={quant}
+                value={quantBook}
                 autoComplete="name"
-                setValue={setQuant}
+                setValue={setQuantBook}
               ></LabelInput>
               <div className="flex flex-col w-full">
                 <span className="text-slate-600">Categoria</span>
                 <select
-                  onChange={(e) => setCategory(e.target.value)}
+                  onChange={(e) => setCategoryBook(e.target.value)}
                   name="test"
-                  value={category}
+                  value={categoryBook}
                   className="bg-white w-10/12 p-1  border-slate-500 outline-none ring-1 ring-offset-1 ring-slate-800 rounded-sm"
                 >
                   {categories &&
@@ -141,8 +131,8 @@ export function ModalBook({
               <div className="mt-6 w-11/12 rounded-md shadow-sm -space-y-px">
                 <span className="text-slate-700">Sinopse</span>
                 <textarea
-                  onChange={(e) => setSinopse(e.target.value)}
-                  value={sinopse}
+                  onChange={(e) => setSinopseBook(e.target.value)}
+                  value={sinopseBook}
                   name="sinopse"
                   className="appearance-none w-full relative block px-3 py-2 border border-slate-400 placeholder-slate-600 text-slate-900 focus:outline-none focus:ring-slate-500 focus:border-slate-500 focus:z-10 sm:text-sm rounded-md shadow-sm"
                 ></textarea>
@@ -153,7 +143,7 @@ export function ModalBook({
                 <Botao
                   name={nameButton}
                   nameIsLoading={nameButtonIsLoading}
-                  isLoading={loading}
+                  isLoading={isLoadingModalBook}
                   type="submit"
                 />
               </div>

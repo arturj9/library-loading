@@ -1,7 +1,18 @@
+import { toast } from "sonner";
 import { Book } from "../types/types";
-import { RowActions } from "./row-actions";
+import { ModalBook } from "./modal-book";
+// import { RowActions } from "./row-actions";
+import { FormEvent, useContext } from "react";
+import { BookContext } from "../contexts/book";
+import { CategoryBookContext } from "../contexts/categories";
+import { AxiosError } from "axios";
+import { DeleteAction } from "./deleteAction";
+import { EditAction } from "./editAction";
 
 export function Rows({ books }: { books: Book[] }) {
+  const { categories } = useContext(CategoryBookContext);
+
+  const buttonStyle = "p-1 h-auto text-slate-100 bg-[#23C55E] rounded-md";
   return (
     <div className="overflow-x-auto overflow-scroll sm:-mx-6 ">
       <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
@@ -10,7 +21,10 @@ export function Rows({ books }: { books: Book[] }) {
             <thead className="font-medium">
               <tr key="1" className="bg-[#f5f5f5]">
                 <th scope="col" className="px-6 py-4 ">
-                  Ações
+                  Deletar
+                </th>
+                <th scope="col" className="px-6 py-4 ">
+                  Editar
                 </th>
                 <th scope="col" className="px-6 py-4">
                   Título
@@ -38,7 +52,14 @@ export function Rows({ books }: { books: Book[] }) {
                   return (
                     <tr key={book.id}>
                       <td className="whitespace-nowrap px-6 py-4">
-                        <RowActions id={book.id} />
+                        <DeleteAction id={book.id} buttonStyle={buttonStyle} />
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4">
+                        <EditAction
+                          categories={categories}
+                          id={book.id}
+                          buttonStyle={buttonStyle}
+                        />
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
                         {book.title}

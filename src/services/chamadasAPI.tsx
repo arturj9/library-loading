@@ -115,3 +115,32 @@ export async function deleteBook(id: string): Promise<object | string> {
     return error;
   }
 }
+
+export async function editBook(
+  id: string,
+  nameBook: string,
+  codeBook: string,
+  authorBook: string,
+  editorBook: string,
+  quantBook: string,
+  categoryBook: string,
+  sinopseBook: string
+): Promise<object | string> {
+  try {
+    const response = await api.patch("books/patch/", {
+      params: {
+        id,
+      },
+      title: nameBook,
+      cod: codeBook,
+      editora: editorBook,
+      autor: authorBook,
+      sinopse: sinopseBook,
+      bookCategoryId: categoryBook,
+      qtd: parseInt(quantBook),
+    });
+    return response;
+  } catch (error: AxiosError | any) {
+    return error;
+  }
+}
