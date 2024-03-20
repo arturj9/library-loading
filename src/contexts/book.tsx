@@ -56,7 +56,7 @@ export const BookProvider = ({ children }: BookProviderProps) => {
     setAuthorBook("");
     setEditorBook("");
     setQuantBook(1);
-    setCategoryBook("");
+    setCategoryBook(books[0].bookCategoryId);
     setSinopseBook("");
   }
 
