@@ -48,11 +48,7 @@ export function TelaCadastro() {
         if (result instanceof AxiosError && result.response) {
           toast.error(result.response.data.message);
         } else {
-          localStorage.setItem("token", result.token);
-          if (localStorage.getItem("token")) {
-            console.log("hhh");
-            navigation("/");
-          }
+            navigation("/login");
         }
       } finally {
         setIsLoading(false);
@@ -74,16 +70,16 @@ export function TelaCadastro() {
           >
             <div className="grid space-y-6 grid-cols-2 w-full">
               <LabelInput
-                name="Nome"
-                placeHolder="Nome Completo"
+                name="Nome Completo"
+                placeHolder="Digite seu nome completo"
                 type="text"
                 autoComplete="name"
                 value={name}
                 setValue={setName}
               ></LabelInput>
               <LabelInput
-                name="Nome de usuario"
-                placeHolder="nome de usuario"
+                name="Nome de Usuário"
+                placeHolder="Digite seu nome de usuário"
                 type="text"
                 autoComplete="name"
                 value={username}
@@ -91,7 +87,7 @@ export function TelaCadastro() {
               ></LabelInput>
               <LabelInput
                 name="E-mail"
-                placeHolder="Digite seu Email"
+                placeHolder="Digite seu e-mail"
                 type="text"
                 autoComplete="email"
                 value={email}
@@ -99,23 +95,23 @@ export function TelaCadastro() {
               ></LabelInput>
               <LabelInput
                 name="Confirmação do E-mail"
-                placeHolder="Confirme seu Email"
+                placeHolder="Confirme seu e-mail"
                 type="text"
                 autoComplete="email"
                 value={emailRepeat}
                 setValue={setEmailRepeat}
               ></LabelInput>
               <LabelInput
-                name="senha"
-                placeHolder="senha"
+                name="Senha"
+                placeHolder="Digite sua senha"
                 type="password"
                 autoComplete="current-password"
                 value={password}
                 setValue={setPassword}
               ></LabelInput>
               <LabelInput
-                name="senha"
-                placeHolder="confirme sua senha"
+                name="Confirmação de Senha"
+                placeHolder="Confirme sua senha"
                 type="password"
                 autoComplete="current-password"
                 value={passwordRepeat}
