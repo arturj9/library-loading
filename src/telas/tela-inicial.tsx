@@ -1,15 +1,11 @@
-import { FormEvent, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Cabecalho } from "../components/cabecalho";
 import { Filtro } from "../components/filtro";
-import { Book, Category, PageInfo } from "../types/types";
+import { PageInfo } from "../types/types";
 import {
-  listagemCategorias,
   listagemLivros,
-  registerBook,
 } from "../services/chamadasAPI";
 import { ListagemLivros } from "../components/listagem-livros";
-import { toast } from "sonner";
-import { AxiosError } from "axios";
 import { BookContext } from "../contexts/book";
 import { CategoryBookContext } from "../contexts/categories";
 

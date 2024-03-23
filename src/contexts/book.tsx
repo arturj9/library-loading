@@ -28,7 +28,7 @@ interface BookContextData {
   handleEditBook(e: FormEvent, book: Book): Promise<void>;
   defaultValues(): void;
   setValues(nameBook: string, codeBook: string, authorBook: string, editorBook: string,
-    quantBook: number, categoryBook: string, sinopseBook: string): void;
+  quantBook: number, categoryBook: string, sinopseBook: string): void;
 }
 
 interface BookProviderProps {
